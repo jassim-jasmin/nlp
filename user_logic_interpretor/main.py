@@ -14,7 +14,6 @@ main_data_document = {
 }
 
 def get_statement(statement=None):
-    """Subject died having issue"""
     statement = '''If ( AESA.DTHDAT != ' ' ) Then  AESA.DTHDAT ;
 ElseIf ( SDIS.DSTERMSC_DLV == ""Subject died"" ) Then SDIS.DSSTDATSC ;
 ElseIf ( SDIS.DSTERMTR_DLV == ""Subject died"" ) Then  SDIS.DSSTDATTR ;
