@@ -15,11 +15,17 @@ syntax_dic = {
         {
             CONDITON: [{BEGIN: ["("], END: [")"]}]# general rule for condition
         }
+    ],
+    "elseif": [
+        {
+            CONDITON: [{BEGIN: ["("], END: [")"]}]
+        }
     ]
 }
 
 action_rule = {
-    "if": {BEGIN: ["Then"], END: [";"], ACTION: "unknown"}
+    "if": {BEGIN: ["Then"], END: [";"], ACTION: "unknown"},
+    "elseif": {BEGIN: ["Then"], END: [";"], ACTION: "unknown"}
 }
 
 def get_next_split_statement(statement, index):
@@ -75,7 +81,7 @@ def get_begin_end_statement(split_statement, keyword_index,each_condition_rule):
 
 def key_word_syntax(split_statement, keyword_index):
     syntax_doc = {}
-    print(split_statement[keyword_index])
+    # print(split_statement[keyword_index])
     key = split_statement[keyword_index].lower()
 
     if key in syntax_dic:
@@ -98,9 +104,10 @@ def key_word_syntax(split_statement, keyword_index):
                     result, keyword_index = get_begin_end_statement(split_statement, keyword_index, each_condition_rule)
                     syntax_doc[key][CONDITON] = result
                     # Begin followed by condition, then action is next
-                    action, keyword_index = get_begin_end_statement(split_statement, keyword_index, action_rule[key])
-                    syntax_doc[key][ACTION] = action
 
-    print(syntax_doc)
+                    if key in action_rule:
+                        action, keyword_index = get_begin_end_statement(split_statement, keyword_index, action_rule[key])
+                        syntax_doc[key][ACTION] = action
+
 
     return keyword_index, syntax_doc
