@@ -31,7 +31,7 @@ def get_variable_operator_data(condition_array, main_data_document=None):
 def convert_logic(rule, main_data_document):
     """
     It's the final process of converting the statement logic to stnd logic
-    :todo: edit needed
+    :todo: edit needed, written for readability
     :param rule:
     :return:
     """
