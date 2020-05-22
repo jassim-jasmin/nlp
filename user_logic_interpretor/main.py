@@ -1,6 +1,6 @@
-from keyword_main import key_word_syntax, syntax_dic
-from keyword_main import convert_logic
-from keyword_main import preprocess
+from derrive_logic import key_word_syntax, syntax_dic
+from derrive_logic import convert_logic
+from derrive_logic import preprocess
 
 main_data_document = {
     "AESA.DTHDAT": "something",

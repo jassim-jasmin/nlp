@@ -1,4 +1,4 @@
-from user_logic_interpretor.keyword_main.common import revert_preprocess, operator_list, user_operator_list
+from user_logic_interpretor.derrive_logic.common import revert_preprocess, operator_list, user_operator_list
 
 def get_variable_operator_data(condition_array, main_data_document=None):
     condition = ''
