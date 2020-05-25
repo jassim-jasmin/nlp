@@ -1,3 +1,5 @@
+from derrive_logic.common import user_operator, main_data_document_df
+
 CONDITON = "condition"
 BEGIN = "begin"
 END = "end"
@@ -79,7 +81,7 @@ def get_begin_end_statement(split_statement, keyword_index,each_condition_rule):
             print("if each condition rule has a begin rule defined, it should satisfy")
             exit(1)  #:todo: change this to move next statement
 
-def key_word_syntax(split_statement, keyword_index):
+def key_word_syntax(split_statement, keyword_index, data):
     syntax_doc = {}
     # print(split_statement[keyword_index])
     key = split_statement[keyword_index].lower()
@@ -107,7 +109,22 @@ def key_word_syntax(split_statement, keyword_index):
 
                     if key in action_rule:
                         action, keyword_index = get_begin_end_statement(split_statement, keyword_index, action_rule[key])
-                        syntax_doc[key][ACTION] = action
+                        action_list = []
+
+                        for each_action in action:
+                            if each_action in data:
+                                syntax_doc[key][ACTION] = [f"{main_data_document_df}['{each_action}']"]
+
+                            elif each_action in user_operator:
+                                syntax_doc[key][ACTION] = [f"{user_operator}['{each_action}']"]
+
+                            else:
+                                syntax_doc[key][ACTION] = [f"'{each_action}'"]
+
+
+
+
+
 
 
     return keyword_index, syntax_doc
