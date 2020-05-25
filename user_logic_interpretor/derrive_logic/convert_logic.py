@@ -1,4 +1,4 @@
-from user_logic_interpretor.derrive_logic.common import *
+from derrive_logic.common import *
 
 def get_variable_operator_data(condition_array, main_data_document=None):
     """
