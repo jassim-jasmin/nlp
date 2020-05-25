@@ -121,10 +121,4 @@ def key_word_syntax(split_statement, keyword_index, data):
                             else:
                                 syntax_doc[key][ACTION] = [f"'{each_action}'"]
 
-
-
-
-
-
-
     return keyword_index, syntax_doc

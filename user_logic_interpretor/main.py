@@ -1,24 +1,29 @@
 from derrive_logic import key_word_syntax, syntax_dic
 from derrive_logic import convert_logic
-from derrive_logic import preprocess
+from derrive_logic import replace_function, revert_replace_function, preprocess_replace_list
 
 """sample input date"""
 main_data_document = {
-    "AESA.DTHDAT": ["something", '', 'other'],
-    "SDIS.DSTERMSC_DLV": ["something", 'x', 'Subject died'],
-    "SDIS.DSSTDATFU": ["somethin", '', 'other'],
-    "SDIS.DSSTDATTR": ["something", '', 'other'],
-    "SDIS.DSTERMTR_DLV": ["something", '', 'other'],
-    "SDIS.DSSTDATSC": ["something", '', 'other'],
-    "SDIS.DSTERMFU_DLV": ["something", 'this value will upate', 'other']
+    "AESA.X": ["something", '', 'other'],
+    "SDIS.Y": ["somethin", 'x', 'Subject died'],
+    "SDIS.Z": ["somethin", '', 'other'],
+    "SDIS.P": ["something", '', 'other'],
+    "SDIS.Q": ["something", '', 'other'],
+    "SDIS.R": ["something", '', 'other'],
+    "SDIS.S": ["something", '', 'this value will upate']
 
 }
 
 def get_statement(statement=None):
-    statement = '''If ( AESA.DTHDAT != ' ' ) Then  AESA.DTHDAT ;
-ElseIf ( SDIS.DSTERMSC_DLV == ""Subject died"" ) Then SDIS.DSSTDATSC ;
-ElseIf ( SDIS.DSTERMSC_DLV == ""x"" ) Then  SDIS.DSTERMFU_DLV ;
-ElseIf ( SDIS.DSTERMFU_DLV == ""Subject_died"" ) Then  FormatDate ( "Demo.BIRTHDT" ) ;'''
+    """
+    :todo: need to fix ("") assigining empty string as "" will be an issue.
+    :param statement:
+    :return:
+    """
+    statement = '''If ( AESA.X != '' ) Then  AESA.X ;
+ElseIf ( AESA.X == '' ) Then SDIS.Y ;
+ElseIf ( SDIS.Y == ""Subject died"" ) Then  SDIS.S ;
+ElseIf ( SDIS.S == ""Subject died"" ) Then  FormatDate ( "Demo.BIRTHDT" ) ;'''
 
     if statement:
         return statement
@@ -27,7 +32,7 @@ def process_statement(main_data_document):
     rule = []
     statement = get_statement()
     print(statement,'\n\n')
-    statement = preprocess(statement)
+    statement = replace_function(preprocess_replace_list, statement)
     split_statement = statement.split()
     limit = len(split_statement)
     index = 0
