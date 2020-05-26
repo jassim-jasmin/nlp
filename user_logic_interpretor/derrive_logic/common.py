@@ -22,6 +22,13 @@ data_frame_replace_list = [
 ]
 
 def replace_function(replace_list, statement, column_name=None):
+    """
+    :todo: if statement is dataframe, :var replace: should be of :var data_frame_replace_list:
+    :param replace_list:
+    :param statement:
+    :param column_name:
+    :return:
+    """
     # print(str(type(statement)))
 
 
