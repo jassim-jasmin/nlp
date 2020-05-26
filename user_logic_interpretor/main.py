@@ -21,9 +21,9 @@ def get_statement(statement=None):
     :return:
     """
     statement = '''If ( AESA.X != '' ) Then  AESA.X ;
-ElseIf ( AESA.X == '' ) Then SDIS.Y ;
-ElseIf ( SDIS.Y == ""Subject died"" ) Then  SDIS.S ;
-ElseIf ( SDIS.S == ""Subject died"" ) Then  FormatDate ( "Demo.BIRTHDT" ) ;'''
+    ElseIf ( AESA.X == '' ) Then SDIS.Y ;
+    ElseIf ( SDIS.Y == ""Subject died"" ) Then  SDIS.S ;
+    ElseIf ( SDIS.S == ""Subject died"" ) Then  FormatDate ( "Demo.BIRTHDT" ) ;'''
 
     if statement:
         return statement

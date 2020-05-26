@@ -1,4 +1,5 @@
 from derrive_logic.common import *
+import pandas as pd
 
 def get_variable_operator_data(condition_array, main_data_document=None):
     """
@@ -8,6 +9,7 @@ def get_variable_operator_data(condition_array, main_data_document=None):
     :return:
     """
     condition = ''
+
     for each_statement in condition_array:
         each_statement = revert_replace_function(preprocess_replace_list, each_statement)
 
@@ -34,8 +36,6 @@ def get_variable_operator_data(condition_array, main_data_document=None):
 
     return condition
 
-
-import pandas as pd
 
 def convert_logic(rule, main_data_document):
     """
@@ -78,7 +78,7 @@ def convert_logic(rule, main_data_document):
                     if constant_assign:
                         match_string = constant_assign.group(1)
                         processing = replace_function(data_frame_replace_list, match_string)
-                        print("PProcessingn", processing)
+                        # print("PProcessingn", processing)
                         condition = condition.replace(match_string, processing)
 
 

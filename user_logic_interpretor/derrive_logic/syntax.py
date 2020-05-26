@@ -109,7 +109,6 @@ def key_word_syntax(split_statement, keyword_index, data):
 
                     if key in action_rule:
                         action, keyword_index = get_begin_end_statement(split_statement, keyword_index, action_rule[key])
-                        action_list = []
 
                         for each_action in action:
                             if each_action in data:

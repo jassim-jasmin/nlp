@@ -31,7 +31,6 @@ def replace_function(replace_list, statement, column_name=None):
     """
     # print(str(type(statement)))
 
-
     for each_data in replace_list:
         if str(type(statement)) == "<class 'list'>":
             statement = [w.replace(each_data[0], each_data[1]) for w in statement]
@@ -47,8 +46,8 @@ def replace_function(replace_list, statement, column_name=None):
             for each_data in replace_list:
                 statement = statement.replace(each_data[0], each_data[1])
 
-
     return statement
+
 
 def revert_replace_function(replace_list, statement, column_name=None):
     for each_data in replace_list:
@@ -68,19 +67,6 @@ def revert_replace_function(replace_list, statement, column_name=None):
 
     return statement
 
-def preprocess(statement):
-    for each_data in preprocess_replace_list:
-        statement = statement.replace(each_data[0], each_data[1])
-
-    statement = statement.replace('\"\"', '\"')
-
-    return statement
-
-def revert_preprocess(statement):
-    for each_data in preprocess_replace_list:
-        statemnt = statement.replace(each_data[1], each_data[0])
-
-    return statemnt
 
 def FormatDate(test):
     """
@@ -89,6 +75,7 @@ def FormatDate(test):
     :return:
     """
     pass
+
 
 user_operator= {
     "FormatDate":FormatDate
