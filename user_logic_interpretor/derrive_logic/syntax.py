@@ -107,8 +107,6 @@ def key_word_syntax(split_statement, keyword_index, data):
 
                 if action_rule: # Changed to single rule
                     action, keyword_index = get_begin_end_statement(split_statement, keyword_index, action_rule)
-                    action_array = []
-                    pre_function_array = []
                     general_array = []
 
                     for each_action in action:
