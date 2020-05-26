@@ -40,5 +40,5 @@ class Test(TestCase):
         result = revert_replace_function(preprocess_replace_list, test_case_statement)
         self.assertEqual(test_case_statement_expected,result, "error in preprocess_replace_list")
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()

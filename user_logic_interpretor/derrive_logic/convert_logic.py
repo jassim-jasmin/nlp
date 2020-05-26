@@ -52,7 +52,7 @@ def convert_logic(rule, main_data_document):
     for each_column in main_data_document_df.columns:
         main_data_document_df = replace_function(data_frame_replace_list, main_data_document_df, each_column)
 
-    print(main_data_document_df)
+    # print(main_data_document_df)
     if_ladder_depth = 0
 
     for each_rule in rule:

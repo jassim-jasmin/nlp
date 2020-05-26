@@ -1,34 +1,26 @@
-from derrive_logic.common import user_operator, main_data_document_df
+from derrive_logic.common import user_operator, main_data_document_df, CONDITON, BEGIN, END, ACTION
 
-CONDITON = "condition"
-BEGIN = "begin"
-END = "end"
-ACTION = "action" # what the statement to be done, eg:- return a
-LADDER = "ladder"
+
 key_word = []
-
 
 """
 condition is given as array, since other syntax may come
 """
 
 syntax_dic = {
-    "if": [
+    "if":
         {
-            CONDITON: [{BEGIN: ["("], END: [")"]}]# general rule for condition
+            CONDITON: [{BEGIN: ["("], END: [")"]}],# general rule for condition
+            ACTION: {BEGIN: ["Then"], END: [";"], ACTION: "unknown"}
         }
-    ],
-    "elseif": [
+    ,
+    "elseif":
         {
-            CONDITON: [{BEGIN: ["("], END: [")"]}]
+            CONDITON: [{BEGIN: ["("], END: [")"]}],
+            ACTION: {BEGIN: ["Then"], END: [";"], ACTION: "unknown"}
         }
-    ]
 }
 
-action_rule = {
-    "if": {BEGIN: ["Then"], END: [";"], ACTION: "unknown"},
-    "elseif": {BEGIN: ["Then"], END: [";"], ACTION: "unknown"}
-}
 
 def get_next_split_statement(statement, index):
     if index < len(statement):
@@ -87,7 +79,7 @@ def key_word_syntax(split_statement, keyword_index, data):
     key = split_statement[keyword_index].lower()
 
     if key in syntax_dic:
-        syntax_rule_array = syntax_dic[key]
+        each_syntax_rul = syntax_dic[key]
         syntax_doc[key] = {}
 
     else:
@@ -96,28 +88,55 @@ def key_word_syntax(split_statement, keyword_index, data):
 
     keyword_index += 1
 
-    for each_syntax_rul in syntax_rule_array:
-        if CONDITON in each_syntax_rul: # logic need to add for each sub rule
-            conditions = each_syntax_rul[CONDITON]
-            for each_condition_rule in conditions:
-                # checking the split statement
-                if BEGIN in each_condition_rule:
-                    #:todo: suppose ( is comming multiple times means, the end key ) will need to check once again.
-                    result, keyword_index = get_begin_end_statement(split_statement, keyword_index, each_condition_rule)
-                    syntax_doc[key][CONDITON] = result
-                    # Begin followed by condition, then action is next
+    if CONDITON in each_syntax_rul: # logic need to add for each sub rule
+        conditions = each_syntax_rul[CONDITON]
 
-                    if key in action_rule:
-                        action, keyword_index = get_begin_end_statement(split_statement, keyword_index, action_rule[key])
+        if ACTION in each_syntax_rul:
+            action_rule = each_syntax_rul[ACTION]
 
-                        for each_action in action:
-                            if each_action in data:
-                                syntax_doc[key][ACTION] = [f"{main_data_document_df}['{each_action}']"]
+        else:
+            action_rule = None
 
-                            elif each_action in user_operator:
-                                syntax_doc[key][ACTION] = [f"{user_operator}['{each_action}']"]
+        for each_condition_rule in conditions:
+            # checking the split statement
+            if BEGIN in each_condition_rule:
+                #:todo: suppose ( is comming multiple times means, the end key ) will need to check once again.
+                result, keyword_index = get_begin_end_statement(split_statement, keyword_index, each_condition_rule)
+                syntax_doc[key][CONDITON] = result
+                # Begin followed by condition, then action is next
 
-                            else:
-                                syntax_doc[key][ACTION] = [f"'{each_action}'"]
+                if action_rule: # Changed to single rule
+                    action, keyword_index = get_begin_end_statement(split_statement, keyword_index, action_rule)
+                    action_array = []
+                    pre_function_array = []
+                    general_array = []
+
+                    for each_action in action:
+                        if each_action in data:
+                            # syntax_doc[key][ACTION] = [f"{main_data_document_df}['{each_action}']"]
+                            general_array.append(f"{main_data_document_df}['{each_action}']")
+
+                        elif each_action in user_operator:
+                            # syntax_doc[key][ACTION] = [f"pre_function['{each_action}']"]
+                            general_array.append(f"pre_function['{each_action}']")
+
+                        else:
+                            # syntax_doc[key][ACTION] = [f"'{each_action}'"]
+                            general_array.append(f"'{each_action}'")
+
+
+                    if general_array:
+                        syntax_doc[key][ACTION] = general_array
+
+                else:
+                    print("exception in action rule, not found:", each_syntax_rul)
+
+            else:
+                print("no begin found")
+
+    else:
+        print(f"no {CONDITON} found in {each_syntax_rul}")
+
+    # print(syntax_doc)
 
     return keyword_index, syntax_doc

@@ -1,3 +1,9 @@
+CONDITON = "condition"
+BEGIN = "begin"
+END = "end"
+ACTION = "action" # what the statement to be done, eg:- return a
+LADDER = "ladder"
+
 preprocess_replace_list = [
     ("' '", "'<space_replace>'")#:todo: multiple empty spce may occur need to change the logic
     # ,('== ""', "== ''"),
@@ -74,7 +80,7 @@ def FormatDate(test):
     :param test:
     :return:
     """
-    pass
+    return 'user_function'
 
 
 user_operator= {
