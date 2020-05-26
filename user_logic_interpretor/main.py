@@ -22,7 +22,7 @@ def get_statement(statement=None):
     """
     statement = '''If ( AESA.X != '' ) Then  AESA.X ;
     ElseIf ( AESA.X == '' ) Then SDIS.Y ;
-    ElseIf ( SDIS.Y == ""Subject died"" ) Then  SDIS.S ;
+    ElseIf ( SDIS.Y == ""Subject died"" ) Then  this_is_a_constant ;
     ElseIf ( SDIS.S == ""Subject died"" ) Then  FormatDate ( "Demo.BIRTHDT" ) ;'''
 
     if statement:
